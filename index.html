@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Online Examination System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="project.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-graduation-cap"></i> Modern Online Examination System</h1>
+            <p>Test your programming knowledge with our interactive examination platform</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="exam-container welcome-screen">
+            <h2><i class="fas fa-laptop-code"></i> Programming Knowledge Test</h2>
+            <p>This examination contains multiple choice and true/false questions about programming concepts, languages, and best practices. You will have 15 minutes to complete the exam.</p>
+            
+            <div class="student-info">
+                <div class="form-group">
+                    <label for="studentName"><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="studentName" placeholder="Enter your full name">
+                    <div id="nameError" class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentId"><i class="fas fa-id-card"></i> Student ID</label>
+                    <input type="text" id="studentId" placeholder="Enter your student ID">
+                    <div id="idError" class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your student ID</div>
+                </div>
+            </div>
+            
+            <button id="startExamBtn" class="btn btn-primary"><i class="fas fa-play"></i> Start Examination</button>
+        </div>
+
+        <!-- Exam Screen -->
+        <div id="examScreen" class="exam-container hidden">
+            <div class="exam-header">
+                <div class="exam-title">Programming Concepts Test</div>
+                <div class="timer">
+                    <span class="timer-icon"><i class="fas fa-clock"></i></span>
+                    <span id="timeDisplay">15:00</span>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Progress</span>
+                    <span id="progressText">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progressBar" class="progress" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div id="questionContainer"></div>
+            
+            <div class="question-navigation" id="questionNavigation"></div>
+            
+            <div class="btn-container">
+                <button id="prevBtn" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button id="nextBtn" class="btn btn-primary">Next <i class="fas fa-arrow-right"></i></button>
+                <button id="submitBtn" class="btn btn-danger hidden"><i class="fas fa-paper-plane"></i> Submit Exam</button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="exam-container result-screen hidden">
+            <h2><i class="fas fa-chart-line"></i> Examination Results</h2>
+            <p id="resultMessage"></p>
+            
+            <div class="performance-grade">
+                <div>
+                    <div class="grade-circle" id="gradeCircle" style="--grade-percent: 0%">
+                        <div class="grade-text" id="gradeText">F</div>
+                    </div>
+                    <div class="grade-label" id="gradeLabel">Fail</div>
+                </div>
+            </div>
+            
+            <div class="score-card">
+                <div class="score-display" id="scoreDisplay">0%</div>
+                
+                <div class="score-details">
+                    <div class="score-item">
+                        <div class="score-item-value" id="correctCount">0</div>
+                        <div class="score-item-label"><i class="fas fa-check-circle"></i> Correct</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-item-value" id="incorrectCount">0</div>
+                        <div class="score-item-label"><i class="fas fa-times-circle"></i> Incorrect</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-item-value" id="timeTaken">00:00</div>
+                        <div class="score-item-label"><i class="fas fa-hourglass-half"></i> Time Taken</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="performance-metrics">
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <div class="metric-value" id="avgTimePerQuestion">0s</div>
+                    <div class="metric-label">Avg. Time per Question</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fas fa-percentage"></i></div>
+                    <div class="metric-value" id="accuracy">0%</div>
+                    <div class="metric-label">Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="metric-value" id="performance">Poor</div>
+                    <div class="metric-label">Performance</div>
+                </div>
+            </div>
+            
+            <div class="performance-chart">
+                <div class="chart-title">Performance by Question Type</div>
+                <div class="chart-container">
+                    <div class="chart-bar" id="mcqBar" style="height: 0%">
+                        <div class="chart-value" id="mcqValue">0%</div>
+                        <div class="chart-label">MCQ</div>
+                    </div>
+                    <div class="chart-bar" id="tfBar" style="height: 0%">
+                        <div class="chart-value" id="tfValue">0%</div>
+                        <div class="chart-label">True/False</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="retakeBtn" class="btn btn-success"><i class="fas fa-redo"></i> Retake Exam</button>
+        </div>
+    </main>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <i class="fas fa-info-circle"></i>
+        <span id="notificationText"></span>
+    </div>
+<script src="project.js"></script>
+</body>
+</html>
